@@ -11,6 +11,7 @@ set -e
 set -u
 
 CURRENT_FOLDER=$(pwd)
+cd $HOME
 git clone https://github.com/openshiftio-vertx-boosters/vertx-health-checks-booster tmp-folder
 cd tmp-folder && scl enable rh-maven33 'mvn clean package'
 cd ${CURRENT_FOLDER} && rm -rf tmp-folder
