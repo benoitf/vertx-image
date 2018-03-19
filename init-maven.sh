@@ -10,8 +10,15 @@
 set -e
 set -u
 
-CURRENT_FOLDER=$(pwd)
-cd $HOME
-git clone https://github.com/openshiftio-vertx-boosters/vertx-health-checks-booster tmp-folder
-cd tmp-folder && scl enable rh-maven33 'mvn clean package'
-cd ${CURRENT_FOLDER} && rm -rf tmp-folder
+maven-get() {
+  url=${1}
+  fold=${2}
+  echo "Cloning ${1} and using subfolder ${fold}"
+  cd ${HOME}
+  git clone ${url} tmp-folder
+  cd tmp-folder/${fold} && scl enable rh-maven33 'mvn clean package'
+  cd ${HOME} && rm -rf tmp-folder
+}
+
+maven-get "https://github.com/openshiftio-vertx-boosters/vertx-health-checks-booster" ""
+maven-get "https://github.com/apache/incubator-openwhisk-devtools" "java-action-archetype"
