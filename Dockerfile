@@ -7,6 +7,9 @@ RUN wget -qO- "https://github.com/apache/incubator-openwhisk-cli/releases/downlo
     wget -qO- "https://github.com/apache/incubator-openwhisk-wskdeploy/releases/download/0.9.0/wskdeploy-0.9.0-linux-amd64.tgz" | tar -zx -C /usr/local/bin/
 USER user    
 COPY ["init-maven.sh","/tmp/init-maven.sh"]
+
+ADD https://api.github.com/repos/apache/incubator-openwhisk-devtools/git/refs/heads/master /tmp/current-sha1
+
 RUN sudo chown user:user /tmp/init-maven.sh && \
     chmod +x /tmp/init-maven.sh && \
     /tmp/init-maven.sh && \

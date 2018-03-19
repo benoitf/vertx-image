@@ -14,12 +14,14 @@ maven-get() {
   url=${1}
   fold=${2}
   goal=${3}
-  echo "Cloning ${1} and using subfolder ${fold}"
+  echo "Cloning ${1} and using subfolder ${fold} and goal ${goal}"
   cd ${HOME}
   git clone ${url} tmp-folder
-  cd tmp-folder/${fold} && scl enable rh-maven33 'mvn clean ${goal}'
+  cd tmp-folder/${fold}
+  scl enable rh-maven33 "mvn clean ${goal}"
   cd ${HOME} && rm -rf tmp-folder
 }
 
 maven-get "https://github.com/openshiftio-vertx-boosters/vertx-health-checks-booster" "" "package"
 maven-get "https://github.com/apache/incubator-openwhisk-devtools" "java-action-archetype" "install"
+
